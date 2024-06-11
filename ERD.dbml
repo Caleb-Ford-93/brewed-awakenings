@@ -1,21 +1,70 @@
 Table Order {
-  id int 
+  id int [primary key]
   productId int
   employeeId int
   timestamp int
+  customerId int
 }
 Table Employee {
-  id int 
+  id int [primary key]
   name varchar
   email varchar
   hourlyRate decimal
+  locationId int
 }
 Table Product {
-  id int 
+  id int [primary key]
   name varchar
   price decimal
+}
+Table inventory {
+  id int [primary key]
+  locationId int
+  productId int
+}
+Table Location {
+  id int [primary key]
+}
+Table Customer {
+  id int [primary key]
+  ccn int
+}
+Table ProductRating {
+  id int [primary key]
+  productId int
+  customerId int
+  rating int
+}
+Table LocationRecs {
+  id int [primary key]
+  customerId int
+  locationId int
+  recomendation varchar
+}
+Table StaffList {
+  id int [primary key]
+  locationId int
+  EmployeeId int
 }
 
 Ref: "Employee"."id" < "Order"."employeeId"
 
 Ref: "Order"."productId" > "Product"."id"
+
+Ref: "Customer"."id" < "Order"."customerId"
+
+Ref: "Customer"."id" < "ProductRating"."customerId"
+
+Ref: "Product"."id" < "ProductRating"."productId"
+
+Ref: "Customer"."id" < "LocationRecs"."customerId"
+
+Ref: "Location"."id" < "LocationRecs"."locationId"
+
+Ref: "Location"."id" < "inventory"."locationId"
+
+Ref: "inventory"."productId" > "Product"."id"
+
+Ref: "StaffList"."locationId" > "Location"."id"
+
+Ref: "Employee"."id" < "StaffList"."EmployeeId"
