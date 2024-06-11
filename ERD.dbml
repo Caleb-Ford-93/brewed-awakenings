@@ -1,0 +1,21 @@
+Table Order {
+  id int 
+  productId int
+  employeeId int
+  timestamp int
+}
+Table Employee {
+  id int 
+  name varchar
+  email varchar
+  hourlyRate decimal
+}
+Table Product {
+  id int 
+  name varchar
+  price decimal
+}
+
+Ref: "Employee"."id" < "Order"."employeeId"
+
+Ref: "Order"."productId" > "Product"."id"
